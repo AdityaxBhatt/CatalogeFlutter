@@ -1,11 +1,20 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:ffi' as ffi;
+import 'dart:ui';
 
 import 'package:cataloge/utils/routes.dart';
 import 'package:flutter/material.dart';
 
-class Loginpage extends StatelessWidget {
+class Loginpage extends StatefulWidget {
+  @override
+  State<Loginpage> createState() => _LoginpageState();
+}
+
+String name = "";
+bool flag = false;
+
+class _LoginpageState extends State<Loginpage> {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -20,9 +29,22 @@ class Loginpage extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            const Text(
+            Text(
               "Login",
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 35,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              flag ? "Hi! $name" : "",
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.black.withOpacity(0.6),
+              ),
             ),
             Padding(
               padding:
@@ -34,6 +56,15 @@ class Loginpage extends StatelessWidget {
                       hintText: "Enter Username",
                       label: Text("Username"),
                     ),
+                    onFieldSubmitted: (value) {
+                      name = value;
+                      if (name == "") {
+                        flag = false;
+                      } else {
+                        flag = true;
+                      }
+                      setState(() {});
+                    },
                   ),
                   TextFormField(
                     obscureText: true,
@@ -45,16 +76,26 @@ class Loginpage extends StatelessWidget {
                   SizedBox(
                     height: 40,
                   ),
-                  ElevatedButton(
-                    style: TextButton.styleFrom(minimumSize: Size(150, 40)),
-                    onPressed: () {
-                      Navigator.pushNamed(context, Myroutes.homepage);
-                    },
+                  AnimatedContainer(
+                    duration: Duration(seconds: 1),
+                    alignment: Alignment.center,
+                    height: 45,
+                    width: 140,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF3346B5),
+                      borderRadius: BorderRadiusDirectional.circular(5),
+                    ),
                     child: Text(
                       "Submit",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold),
+                          
                     ),
+                    
                   )
+                  
                 ],
               ),
             )
