@@ -2,13 +2,21 @@
 
 import 'dart:ffi' as ffi;
 import 'dart:ui';
-
+import 'package:cataloge/pages/homepage.dart';
 import 'package:cataloge/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 class Loginpage extends StatefulWidget {
   @override
   State<Loginpage> createState() => _LoginpageState();
+}
+
+final _formKey = GlobalKey<FormState>();
+
+moveHome(BuildContext context) {
+  if (_formKey.currentState?.validate() == true) {
+    Navigator.pushNamed(context, Myroutes.homepage);
+  }
 }
 
 String name = "";
@@ -49,54 +57,71 @@ class _LoginpageState extends State<Loginpage> {
             Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
-              child: Column(
-                children: [
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: "Enter Username",
-                      label: Text("Username"),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      validator: (value) {
+                        if (value?.isEmpty == true) {
+                          return "Username Cannot be Empty";
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                        hintText: "Enter Username",
+                        label: Text("Username"),
+                      ),
+                      onFieldSubmitted: (value) {
+                        name = value;
+                        if (name == "") {
+                          flag = false;
+                        } else {
+                          flag = true;
+                        }
+                        setState(() {});
+                      },
                     ),
-                    onFieldSubmitted: (value) {
-                      name = value;
-                      if (name == "") {
-                        flag = false;
-                      } else {
-                        flag = true;
-                      }
-                      setState(() {});
-                    },
-                  ),
-                  TextFormField(
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      hintText: "Enter Password",
-                      label: Text("Password"),
+                    TextFormField(
+                      validator: (value) {
+                        if (value?.isEmpty == true) {
+                          return "Password Cannot be Empty";
+                        } else if (value!.length < 8) {
+                          return "Password length must be atleast 8";
+                        }
+                        return null;
+                      },
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        hintText: "Enter Password",
+                        label: Text("Password"),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  AnimatedContainer(
-                    duration: Duration(seconds: 1),
-                    alignment: Alignment.center,
-                    height: 45,
-                    width: 140,
-                    decoration: BoxDecoration(
-                      color: Color(0xFF3346B5),
-                      borderRadius: BorderRadiusDirectional.circular(5),
+                    SizedBox(
+                      height: 30,
                     ),
-                    child: Text(
-                      "Submit",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold),
-                          
-                    ),
-                    
-                  )
-                  
-                ],
+                    InkWell(
+                      onTap: () => moveHome(context),
+                      child: Ink(
+                        height: 45,
+                        width: 140,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF3346B5),
+                          borderRadius: BorderRadiusDirectional.circular(7),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Submit",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             )
           ],
