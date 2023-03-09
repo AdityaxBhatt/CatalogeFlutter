@@ -16,8 +16,8 @@ class Mydrawer extends StatelessWidget {
               margin: EdgeInsets.zero,
               child: UserAccountsDrawerHeader(
                 margin: EdgeInsets.zero,
-                accountName: Padding(
-                  padding: const EdgeInsetsDirectional.only(bottom: 10),
+                accountName: const Padding(
+                  padding: EdgeInsetsDirectional.only(bottom: 10),
                   child: Text(
                     "Aditya Bhatt",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
@@ -31,12 +31,12 @@ class Mydrawer extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, Myroutes.homepage);
             },
-            leading: Icon(
+            leading: const Icon(
               CupertinoIcons.home,
               color: Colors.white,
               size: 30,
             ),
-            title: Text(
+            title: const Text(
               "Home",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
