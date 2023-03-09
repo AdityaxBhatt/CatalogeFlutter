@@ -9,10 +9,11 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  int day = 2;
+  int day = 8;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.light,
       theme: ThemeData(
         primarySwatch: Colors.indigo,
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData(brightness: Brightness.dark),
       routes: {
-        "/": (context) => Loginpage(),
+        "/": (context) => HomePage(),
         Myroutes.loginpage: (context) => Loginpage(),
         Myroutes.homepage: (context) => HomePage(),
       },
