@@ -1,10 +1,11 @@
+import 'package:cataloge/models/cataloge.dart';
+import 'package:cataloge/widgets/itemWidget.dart';
 import 'package:flutter/material.dart';
-
 import '../widgets/drawer.dart';
 
 class HomePage extends StatelessWidget {
   int day = 8;
-
+  final dummylist = List.generate(20, (index) => CatalogeModel.item[0]);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,10 +14,13 @@ class HomePage extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
       ),
-      body: Center(
-        child: Container(
-          child: Text("Welcome to day $day hiee!!"),
-        ),
+      body: ListView.builder(
+        itemCount: dummylist.length,
+        itemBuilder: (context, index) {
+          return ItemWidget(
+            item: dummylist[index],
+          );
+        },
       ),
       drawer: Mydrawer(),
     );
