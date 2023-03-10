@@ -6,6 +6,8 @@ import 'package:cataloge/pages/homepage.dart';
 import 'package:cataloge/utils/routes.dart';
 import 'package:flutter/material.dart';
 
+String name = "";
+
 class Loginpage extends StatefulWidget {
   @override
   State<Loginpage> createState() => _LoginpageState();
@@ -19,7 +21,6 @@ moveHome(BuildContext context) {
   }
 }
 
-String name = "";
 bool flag = false;
 
 class _LoginpageState extends State<Loginpage> {
@@ -65,6 +66,8 @@ class _LoginpageState extends State<Loginpage> {
                       validator: (value) {
                         if (value?.isEmpty == true) {
                           return "Username Cannot be Empty";
+                        } else {
+                          name = value!;
                         }
                         return null;
                       },

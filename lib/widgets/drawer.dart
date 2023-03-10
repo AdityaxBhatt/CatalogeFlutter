@@ -1,10 +1,17 @@
+import 'package:cataloge/pages/loginpage.dart';
 import 'package:cataloge/utils/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Mydrawer extends StatelessWidget {
+class Mydrawer extends StatefulWidget {
+  @override
+  State<Mydrawer> createState() => _MydrawerState();
+}
+
+class _MydrawerState extends State<Mydrawer> {
   final imageurl =
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDI9eA0666I1JBFbNnzUD15XM29DJX2w8Co2I9ilTq&s';
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -16,10 +23,10 @@ class Mydrawer extends StatelessWidget {
               margin: EdgeInsets.zero,
               child: UserAccountsDrawerHeader(
                 margin: EdgeInsets.zero,
-                accountName: const Padding(
+                accountName: Padding(
                   padding: EdgeInsetsDirectional.only(bottom: 10),
                   child: Text(
-                    "Aditya Bhatt",
+                    name,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
                   ),
                 ),

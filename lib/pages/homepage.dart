@@ -1,12 +1,36 @@
+import 'dart:convert';
+
 import 'package:cataloge/models/cataloge.dart';
 import 'package:cataloge/widgets/itemWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../widgets/drawer.dart';
 
-class HomePage extends StatelessWidget {
-  int day = 8;
-  final dummylist = List.generate(20, (index) => CatalogeModel.item[0]);
+class HomePage extends StatefulWidget {
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int day = 8;
+
+  @override
+  void initState() {
+    super.initState();
+    loadjson();
+  }
+
+  loadjson() async {
+    await Future.delayed(const Duration(seconds: 1));
+    var catalogJson = await rootBundle.loadString(
+        "/Users/adityabhatt/MobileDev/cataloge/assets/files/catalog.json");
+    var decodedjson = jsonDecode(catalogJson);
+    var productdata = decodedjson["products"];
+    CatalogeModel.item =
+        List.from(productdata).map<Item>((item) => Item.frommap(item)).toList();
+    setState(() {});
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -14,14 +38,16 @@ class HomePage extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
       ),
-      body: ListView.builder(
-        itemCount: dummylist.length,
-        itemBuilder: (context, index) {
-          return ItemWidget(
-            item: dummylist[index],
-          );
-        },
-      ),
+      body: (CatalogeModel.item.isNotEmpty)
+          ? ListView.builder(
+              itemCount: CatalogeModel.item.length,
+              itemBuilder: (context, index) {
+                return ItemWidget(
+                  item: CatalogeModel.item[index],
+                );
+              },
+            )
+          : const Center(child: CircularProgressIndicator()),
       drawer: Mydrawer(),
     );
   }
