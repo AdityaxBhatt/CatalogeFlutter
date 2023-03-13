@@ -1,9 +1,13 @@
 import 'dart:convert';
 
 import 'package:cataloge/models/cataloge.dart';
+import 'package:cataloge/pages/homedetail.dart';
+import 'package:cataloge/utils/routes.dart';
 import 'package:cataloge/widgets/itemWidget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:velocity_x/velocity_x.dart';
 import '../widgets/drawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -33,22 +37,109 @@ class _HomePageState extends State<HomePage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Catalog App",
-            style: TextStyle(fontWeight: FontWeight.bold)),
-        centerTitle: true,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(context, Myroutes.cartpage),
+        child: Icon(CupertinoIcons.cart),
+      ).px16(),
+      backgroundColor: Color(0xfff5f5f5),
+      body: SafeArea(
+        child: Container(
+          padding: Vx.m16,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Topbar(),
+            if (!CatalogeModel.item.isEmpty)
+              Showlist().expand()
+            else
+              CircularProgressIndicator().centered().expand(),
+          ]),
+        ),
       ),
-      body: (CatalogeModel.item.isNotEmpty)
-          ? ListView.builder(
-              itemCount: CatalogeModel.item.length,
-              itemBuilder: (context, index) {
-                return ItemWidget(
-                  item: CatalogeModel.item[index],
-                );
-              },
-            )
-          : const Center(child: CircularProgressIndicator()),
-      drawer: Mydrawer(),
     );
+  }
+}
+
+class Topbar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      "Catalog App".text.xl5.bold.color(Color(0xFF3346B5)).make(),
+      "Trending Products".text.xl.make(),
+    ]);
+  }
+}
+
+class Showlist extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: CatalogeModel.item.length,
+      itemBuilder: (context, index) {
+        final catalog = CatalogeModel.item[index];
+        return InkWell(
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Homedetail(
+                          catalog: catalog,
+                        ))),
+            child: CatalogItem(catalog: catalog));
+      },
+    ).py1();
+  }
+}
+
+class CatalogItem extends StatelessWidget {
+  final Item catalog;
+
+  const CatalogItem({super.key, required this.catalog})
+      : assert(catalog != null);
+
+  @override
+  Widget build(BuildContext context) {
+    return VxBox(
+            child: Row(
+      children: [
+        Hero(
+          tag: Key(catalog.id.toString()),
+          child: Image.network(catalog.image)
+              .box
+              .color(Color(0xfff5f5f5))
+              .p1
+              .alignCenter
+              .rounded
+              .make()
+              .p16()
+              .w40(context),
+        ),
+        Expanded(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                catalog.name.text.bold.size(15).make(),
+                catalog.desc.text.textStyle(context.captionStyle).make(),
+                ButtonBar(
+                  alignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    "\$${catalog.price.toString()}".text.make(),
+                    ElevatedButton(
+                      child: "Add to cart".text.make(),
+                      onPressed: () {},
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all(StadiumBorder())),
+                    ).box.make().px12(),
+                  ],
+                ).box.make().pOnly(top: 15)
+              ]),
+        )
+      ],
+    ))
+        .square(150)
+        .color(Colors.white)
+        .roundedLg
+        .make()
+        .py12()
+        .safeArea(bottom: false);
   }
 }

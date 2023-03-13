@@ -24,9 +24,9 @@ class _MydrawerState extends State<Mydrawer> {
               child: UserAccountsDrawerHeader(
                 margin: EdgeInsets.zero,
                 accountName: Padding(
-                  padding: EdgeInsetsDirectional.only(bottom: 10),
+                  padding: EdgeInsetsDirectional.only(bottom: 10, start: 10),
                   child: Text(
-                    name,
+                    (name != "") ? name : "Guest",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
                   ),
                 ),

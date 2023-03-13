@@ -1,3 +1,4 @@
+import 'package:cataloge/pages/cartpage.dart';
 import 'package:cataloge/pages/homepage.dart';
 import 'package:cataloge/utils/routes.dart';
 import 'package:cataloge/widgets/theme.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         "/": (context) => HomePage(),
         Myroutes.loginpage: (context) => Loginpage(),
         Myroutes.homepage: (context) => HomePage(),
+        Myroutes.cartpage: (context) => CartPage()
       },
     );
   }
