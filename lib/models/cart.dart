@@ -13,7 +13,6 @@ class CartModel {
   CatalogeModel get catalog => _catalog;
 
   set catalog(CatalogeModel newCatalog) {
-    assert(newCatalog != null);
     _catalog = newCatalog;
   }
 
@@ -26,15 +25,9 @@ class CartModel {
 
   // Add Item
 
-  void add(Item item) {
-    _itemIds.add(item.id);
-  }
-
   // Remove Item
 
-  void remove(Item item) {
-    _itemIds.remove(item.id);
-  }
+  
 }
 
 class AddMutation extends VxMutation<Mystore> {
@@ -44,5 +37,15 @@ class AddMutation extends VxMutation<Mystore> {
   @override
   perform() {
     store!.cart._itemIds.add(item.id);
+  }
+}
+
+class RemoveMutation extends VxMutation<Mystore> {
+  final Item item;
+
+  RemoveMutation(this.item);
+  @override
+  perform() {
+    store!.cart._itemIds.remove(item.id);
   }
 }

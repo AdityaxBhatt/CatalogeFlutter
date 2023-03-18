@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^4.0.3
   velocity_x: ^3.3.0
+  http: ^0.13.5
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -59,9 +60,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/
-    - assets/files/
-  #   - images/a_dot_ham.jpeg
+    - assets/images/undraw_Login_re_4vu2.png
+    - assets/files/catalog.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

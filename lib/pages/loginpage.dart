@@ -1,12 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
-
 import 'package:cataloge/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 String name = "";
 
 class Loginpage extends StatefulWidget {
+  const Loginpage({super.key});
+
   @override
   State<Loginpage> createState() => _LoginpageState();
 }
@@ -18,7 +19,7 @@ moveHome(BuildContext context) {
     Navigator.pushNamed(context, Myroutes.homepage);
   }
 }
-
+ 
 bool flag = false;
 
 class _LoginpageState extends State<Loginpage> {

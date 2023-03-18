@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class Homedetail extends StatelessWidget {
-  const Homedetail({super.key, required this.catalog})
-      : assert(catalog != null);
+  const Homedetail({super.key, required this.catalog});
   final Item catalog;
   @override
   Widget build(BuildContext context) {
@@ -15,7 +14,7 @@ class Homedetail extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           catalog.name,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
       bottomNavigationBar: Container(
@@ -30,8 +29,8 @@ class Homedetail extends StatelessWidget {
           ],
         ).px32().wh(150, 130),
       ),
-      drawer: Mydrawer(),
-      backgroundColor: Color(0xfff5f5f5),
+      drawer: const Mydrawer(),
+      backgroundColor: const Color(0xfff5f5f5),
       body: SafeArea(
         bottom: false,
         child: Column(

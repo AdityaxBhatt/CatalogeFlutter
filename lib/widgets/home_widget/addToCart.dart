@@ -15,7 +15,7 @@ class AddToCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    VxState.watch(context, on: [AddMutation]);
+    VxState.watch(context, on: [AddMutation, RemoveMutation]);
     final CartModel cart = (VxState.store as Mystore).cart;
     bool isIncart = cart.items.contains(catalog);
     return ElevatedButton(
@@ -23,13 +23,12 @@ class AddToCart extends StatelessWidget {
           if (!isIncart) {
             AddMutation(catalog);
           } else {
-            cart.remove(catalog);
+            RemoveMutation(catalog);
           }
-          
         },
-        style: ButtonStyle(shape: MaterialStateProperty.all(StadiumBorder())),
+        style: ButtonStyle(shape: MaterialStateProperty.all(const StadiumBorder())),
         child: isIncart
-            ? Icon(CupertinoIcons.check_mark)
-            : Icon(CupertinoIcons.cart_badge_plus));
+            ? const Icon(CupertinoIcons.check_mark)
+            : const Icon(CupertinoIcons.cart_badge_plus));
   }
 }

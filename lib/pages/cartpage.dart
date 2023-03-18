@@ -11,7 +11,7 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xfff5f5f5),
+        backgroundColor: const Color(0xfff5f5f5),
         appBar: AppBar(
           title: "Cart".text.xl3.make(),
           backgroundColor: Colors.transparent,
@@ -20,16 +20,17 @@ class CartPage extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Cartview().p32().expand(),
+            const Cartview().p32().expand(),
             const Divider().h(10),
-            CartTotal().p16(),
+            const CartTotal().p16(),
           ],
         ));
   }
 }
 
 class CartTotal extends StatelessWidget {
-  
+  const CartTotal({super.key});
+
   @override
   Widget build(BuildContext context) {
     final CartModel cart = (VxState.store as Mystore).cart;
@@ -43,7 +44,13 @@ class CartTotal extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              "\$${cart.totalPrice}".text.xl5.make(),
+              VxConsumer(
+                notifications: const {},
+                mutations: const {RemoveMutation},
+                builder: (context, store, status) {
+                  return "\$${cart.totalPrice}".text.xl5.make();
+                },
+              ),
               ElevatedButton(
                 child: "Proceed to Payment".text.make(),
                 onPressed: () {
@@ -61,21 +68,23 @@ class CartTotal extends StatelessWidget {
   }
 }
 
-class Cartview extends StatelessWidget{
-  
+class Cartview extends StatelessWidget {
+  const Cartview({super.key});
+
   @override
   Widget build(BuildContext context) {
     final CartModel cart = (VxState.store as Mystore).cart;
+    VxState.watch(context, on: [RemoveMutation]);
     return cart.items.isEmpty
         ? "Nothing to show".text.xl2.caption(context).makeCentered()
         : ListView.builder(
             itemCount: cart.items.length,
             itemBuilder: (context, index) => ListTile(
-              leading: Icon(Icons.done),
+              leading: const Icon(Icons.done),
               trailing: IconButton(
-                icon: Icon(Icons.remove_circle_outline),
+                icon: const Icon(Icons.remove_circle_outline),
                 onPressed: () {
-                  cart.remove(cart.items[index]);
+                  RemoveMutation(cart.items[index]);
                   // setState(() {});
                 },
               ),

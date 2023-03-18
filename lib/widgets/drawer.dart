@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Mydrawer extends StatefulWidget {
+  const Mydrawer({super.key});
+
   @override
   State<Mydrawer> createState() => _MydrawerState();
 }
@@ -24,10 +26,10 @@ class _MydrawerState extends State<Mydrawer> {
               child: UserAccountsDrawerHeader(
                 margin: EdgeInsets.zero,
                 accountName: Padding(
-                  padding: EdgeInsetsDirectional.only(bottom: 10, start: 10),
+                  padding: const EdgeInsetsDirectional.only(bottom: 10, start: 10),
                   child: Text(
                     (name != "") ? name : "Guest",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
                   ),
                 ),
                 accountEmail: null,

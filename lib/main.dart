@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         "/": (context) => HomePage(),
         Myroutes.loginpage: (context) => Loginpage(),
         Myroutes.homepage: (context) => HomePage(),
-        Myroutes.cartpage: (context) => CartPage()
+        Myroutes.cartpage: (context) => const CartPage()
       },
     );
   }

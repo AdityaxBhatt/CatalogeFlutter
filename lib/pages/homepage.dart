@@ -1,21 +1,22 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:cataloge/core/store.dart';
+import 'package:cataloge/models/cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-
 import 'package:cataloge/models/cataloge.dart';
 import 'package:cataloge/pages/homedetail.dart';
 import 'package:cataloge/utils/routes.dart';
-import 'package:cataloge/widgets/itemWidget.dart';
-
 
 import '../widgets/home_widget/addToCart.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -40,23 +41,37 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
+  @override
   Widget build(BuildContext context) {
+    final cart = (VxState.store as Mystore).cart;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, Myroutes.cartpage),
-        child: Icon(CupertinoIcons.cart),
-      ).px16(),
-      backgroundColor: Color(0xfff5f5f5),
+      floatingActionButton: VxConsumer(
+          notifications: const {},
+          mutations: {AddMutation, RemoveMutation},
+          builder: (context, store, status) {
+            return FloatingActionButton(
+              onPressed: () => Navigator.pushNamed(context, Myroutes.cartpage),
+              child: const Icon(CupertinoIcons.cart),
+            ).badge(
+                color: Vx.red500,
+                size: 22,
+                count: cart.items.length,
+                textStyle: const TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold));
+          }),
+      backgroundColor: const Color(0xfff5f5f5),
       body: SafeArea(
         child: Container(
           padding: Vx.m16,
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Topbar(),
-            if (!CatalogeModel.item.isEmpty)
-              Showlist().expand()
+            const Topbar(),
+            if (CatalogeModel.item.isNotEmpty)
+              const Showlist().expand()
             else
-              CircularProgressIndicator().centered().expand(),
+              const CircularProgressIndicator().centered().expand(),
           ]),
         ),
       ),
@@ -65,16 +80,20 @@ class _HomePageState extends State<HomePage> {
 }
 
 class Topbar extends StatelessWidget {
+  const Topbar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      "Catalog App".text.xl5.bold.color(Color(0xFF3346B5)).make(),
+      "Catalog App".text.xl5.bold.color(const Color(0xFF3346B5)).make(),
       "Trending Products".text.xl.make(),
     ]);
   }
 }
 
 class Showlist extends StatelessWidget {
+  const Showlist({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -97,8 +116,7 @@ class Showlist extends StatelessWidget {
 class CatalogItem extends StatelessWidget {
   final Item catalog;
 
-  const CatalogItem({super.key, required this.catalog})
-      : assert(catalog != null);
+  const CatalogItem({super.key, required this.catalog});
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +127,7 @@ class CatalogItem extends StatelessWidget {
           tag: Key(catalog.id.toString()),
           child: Image.network(catalog.image)
               .box
-              .color(Color(0xfff5f5f5))
+              .color(const Color(0xfff5f5f5))
               .p1
               .alignCenter
               .rounded
@@ -145,5 +163,3 @@ class CatalogItem extends StatelessWidget {
         .safeArea(bottom: false);
   }
 }
-
-
