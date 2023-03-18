@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:ffi' as ffi;
-import 'dart:ui';
-import 'package:cataloge/pages/homepage.dart';
+
 import 'package:cataloge/utils/routes.dart';
 import 'package:flutter/material.dart';
 

@@ -1,8 +1,10 @@
-import 'package:cataloge/models/cataloge.dart';
+import 'package:cataloge/core/store.dart';
+import 'package:cataloge/models/cataloge.dart' show CatalogeModel, Item;
+import 'package:velocity_x/velocity_x.dart';
 
 class CartModel {
   // catalog field
-  late CatalogeModel _catalog;
+  CatalogeModel _catalog = CatalogeModel();
 
   // Collection of IDs - store Ids of each item
   final List<dynamic> _itemIds = [];
@@ -32,5 +34,15 @@ class CartModel {
 
   void remove(Item item) {
     _itemIds.remove(item.id);
+  }
+}
+
+class AddMutation extends VxMutation<Mystore> {
+  final Item item;
+
+  AddMutation(this.item);
+  @override
+  perform() {
+    store!.cart._itemIds.add(item.id);
   }
 }

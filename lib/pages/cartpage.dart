@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cataloge/core/store.dart';
+import 'package:cataloge/models/cart.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:matcher/matcher.dart';
+
 import 'package:velocity_x/velocity_x.dart';
 
 class CartPage extends StatelessWidget {
@@ -29,10 +29,10 @@ class CartPage extends StatelessWidget {
 }
 
 class CartTotal extends StatelessWidget {
-  const CartTotal({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
+    final CartModel cart = (VxState.store as Mystore).cart;
     return SizedBox(
       height: 200,
       child: Column(
@@ -43,7 +43,7 @@ class CartTotal extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              "\$999".text.xl5.make(),
+              "\$${cart.totalPrice}".text.xl5.make(),
               ElevatedButton(
                 child: "Proceed to Payment".text.make(),
                 onPressed: () {
@@ -61,25 +61,26 @@ class CartTotal extends StatelessWidget {
   }
 }
 
-class Cartview extends StatefulWidget {
-  const Cartview({super.key});
-
-  @override
-  State<Cartview> createState() => _CartviewState();
-}
-
-class _CartviewState extends State<Cartview> {
+class Cartview extends StatelessWidget{
+  
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) => ListTile(
-        leading: Icon(Icons.done),
-        trailing: IconButton(
-          icon: Icon(Icons.remove_circle_outline),
-          onPressed: () {},
-        ),
-        title: "Item".text.make(),
-      ),
-    );
+    final CartModel cart = (VxState.store as Mystore).cart;
+    return cart.items.isEmpty
+        ? "Nothing to show".text.xl2.caption(context).makeCentered()
+        : ListView.builder(
+            itemCount: cart.items.length,
+            itemBuilder: (context, index) => ListTile(
+              leading: Icon(Icons.done),
+              trailing: IconButton(
+                icon: Icon(Icons.remove_circle_outline),
+                onPressed: () {
+                  cart.remove(cart.items[index]);
+                  // setState(() {});
+                },
+              ),
+              title: cart.items[index].name.text.make(),
+            ),
+          );
   }
 }

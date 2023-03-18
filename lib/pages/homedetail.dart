@@ -1,6 +1,7 @@
 import 'package:cataloge/models/cataloge.dart';
 import 'package:cataloge/widgets/drawer.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cataloge/widgets/home_widget/addToCart.dart';
+
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -11,7 +12,6 @@ class Homedetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
         title: Text(
           catalog.name,
@@ -24,12 +24,9 @@ class Homedetail extends StatelessWidget {
           alignment: MainAxisAlignment.spaceBetween,
           children: [
             "\$${catalog.price.toString()}".text.xl4.bold.make(),
-            ElevatedButton(
-              child: "Buy".text.bold.xl.make(),
-              onPressed: () {},
-              style: ButtonStyle(
-                  shape: MaterialStateProperty.all(StadiumBorder())),
-            ).box.make().wh(100, 50),
+            AddToCart(
+              catalog: catalog,
+            ).scale110(),
           ],
         ).px32().wh(150, 130),
       ),

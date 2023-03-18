@@ -1,14 +1,19 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 
 import 'package:cataloge/models/cataloge.dart';
 import 'package:cataloge/pages/homedetail.dart';
 import 'package:cataloge/utils/routes.dart';
 import 'package:cataloge/widgets/itemWidget.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:velocity_x/velocity_x.dart';
-import '../widgets/drawer.dart';
+
+
+import '../widgets/home_widget/addToCart.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -123,11 +128,8 @@ class CatalogItem extends StatelessWidget {
                   alignment: MainAxisAlignment.spaceBetween,
                   children: [
                     "\$${catalog.price.toString()}".text.make(),
-                    ElevatedButton(
-                      child: "Add to cart".text.make(),
-                      onPressed: () {},
-                      style: ButtonStyle(
-                          shape: MaterialStateProperty.all(StadiumBorder())),
+                    AddToCart(
+                      catalog: catalog,
                     ).box.make().px12(),
                   ],
                 ).box.make().pOnly(top: 15)
@@ -143,3 +145,5 @@ class CatalogItem extends StatelessWidget {
         .safeArea(bottom: false);
   }
 }
+
+
