@@ -1,16 +1,19 @@
-# cataloge
+# Baazar App
 
-A new Flutter project.
+(A catalog app which shows products)
 
-## Getting Started
+This is a Flutter app which has a Login page where user can enter Username and Password,
+A homepage where all the product are shown. Each product have "add to cart" button to put that product to cart. This page has floating navigation button to enter cart page.
+Cartpage contains all the products that were sent to cart by user and the total amount is calculated and shown in bottom of the page.
 
-This project is a starting point for a Flutter application.
+Addition and removal of products from the cart is dynamic result is shown in realtime.
 
-A few resources to get you started if this is your first Flutter project:
+Tools and Framework used:-
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Flutter
+- VelocityX
+- Xcode ios emulator
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Primary Language:-
+
+- Dart

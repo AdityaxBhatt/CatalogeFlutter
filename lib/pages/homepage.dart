@@ -85,7 +85,7 @@ class Topbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      "Catalog App".text.xl5.bold.color(const Color(0xFF3346B5)).make(),
+      "Baazar App".text.xl5.bold.color(const Color(0xFF3346B5)).make(),
       "Trending Products".text.xl.make(),
     ]);
   }
